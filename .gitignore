@@ -1,0 +1,10 @@
+public/bundles
+node_modules
+*.DS_Store
+logs
+sample
+*.log
+.idea/
+*.iml
+*.ipr
+*.iws

@@ -7,7 +7,8 @@ class Flights extends Component {
     componentDidMount() {
         fetch('/flights')
             .then(res => res.json())
-            .then(flights => this.setState({ flights }));
+                .then(flights => this.setState({ flights }))
+            .catch(res => console.log(res));
     }
 
     render() {

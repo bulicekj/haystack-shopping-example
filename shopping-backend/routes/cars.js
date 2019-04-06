@@ -4,17 +4,17 @@ const router = express.Router();
 
 const tracer = require('../tracer').default;
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
+    // Retrieve parent span information sent from http headers
+    const parent = opentracing.SpanContext(req.headers['x-trace-id'], req.headers['x-span-id'], '');
+    // Construct child span from the server
     const serverSpan = tracer
-        .startSpan('/cars', {
-            childOf: tracer.extract(opentracing.FORMAT_HTTP_HEADERS, {
-                'X-Trace-ID': req.params.traceId,
-                'X-Span-ID': req.params.spanId,
-                'X-Parent-ID': req.params.parentSpanId
-            }),
+        .startSpan('/retrieve-cars', {
+            childOf: parent,
             tags: {
                 'span.kind': 'server',
-                'http.method': 'GET'
+                'http.method': 'GET',
+                'custom.tag': 'car-search'
             }
         });
 

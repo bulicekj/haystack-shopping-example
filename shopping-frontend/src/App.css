@@ -31,3 +31,35 @@
     transform: rotate(360deg);
   }
 }
+
+.inline-list {
+  display: inline;
+  padding: 15px 15px 15px 15px;
+  font-size: 2em;
+
+}
+
+.navbar {
+  list-style-type: none;
+  margin-top: 15px;
+  margin-left: 30px;
+  padding: 0;
+  color: #e23474;
+}
+
+code {
+  font-weight: 800;
+  color: #e23474;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 30px;
+  top: 15px;
+}

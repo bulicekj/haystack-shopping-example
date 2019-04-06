@@ -12,21 +12,21 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    <ul>
-                        <li>
-                            <Link to="/">Search</Link>
+                    <ul className="navbar">
+                        <li className="inline-list">
+                            <Link to="/">Home</Link>
                         </li>
-                        <li>
+                        <li className="inline-list">
                             <Link to="/cars">Cars</Link>
                         </li>
-                        <li>
+                        <li className="inline-list">
                             <Link to="/flights">Flights</Link>
                         </li>
-                        <li>
+                        <li className="inline-list">
                             <Link to="/hotels">Hotels</Link>
                         </li>
                     </ul>
-
+                    <img src="logo.png" className="logo"/>
                     <hr />
 
                     <Route exact path="/" component={Search} />

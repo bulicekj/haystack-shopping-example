@@ -6,7 +6,9 @@ class Search extends Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    <h1>Search</h1>
+                    <h1 className="underline">Select a link above to search</h1>
+                    <br />
+                    <p>A trace will be created from <code>shopping-frontend</code>, which will link to the <code>shopping-backend</code> call and create a timeline in Haystack-UI</p>
                 </header>
             </div>
         );

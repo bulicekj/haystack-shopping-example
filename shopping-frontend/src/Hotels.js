@@ -7,7 +7,8 @@ class Hotels extends Component {
     componentDidMount() {
         fetch('/hotels')
             .then(res => res.json())
-            .then(hotels => this.setState({ hotels }));
+                .then(hotels => this.setState({ hotels }))
+            .catch(res => console.log(res));
     }
 
     render() {

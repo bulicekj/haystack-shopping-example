@@ -4,7 +4,7 @@ node_modules
 logs
 sample
 *.log
-.idea/*
+.idea/
 *.iml
 *.ipr
 *.iws

@@ -1,9 +1,9 @@
 <img src="/shopping-frontend/public/logo_with_title_transparent.png" width="300" />
 
 # Haystack-Shopping-Example
-Haystack-shopping-example is an app that is designed to be used in parallel with [Haystack Docker](https://github.com/expediadotcom/haystack-docker/). It consists of two javascript servers: a [create-react-app](https://github.com/facebook/create-react-app/) frontend that uses webpack-dev-server, and an express backend that acts as a dummy database. Both servers use [haystack-client-node](https://github.com/expediadotcom/haystack-client-node/) to create and dispatch traces. 
+Haystack-shopping-example is an app that is designed to be used in parallel with [Haystack Docker](https://github.com/expediadotcom/haystack-docker/). It consists of two Node.js servers: a [create-react-app](https://github.com/facebook/create-react-app/) frontend that uses webpack-dev-server, and an express backend that acts as a dummy database. Both servers use [haystack-client-node](https://github.com/expediadotcom/haystack-client-node/) to create and dispatch traces. 
 
-When used in conjunction with haystack-docker, the shopping-frontend will be exposed to port 3000. Navigating around the frontend will dispatch different traces via [haystack agent](https://github.com/expediadotcom/haystack-agent/) on port 34000, which, if deployed, will be visible on [haystack-ui](https://github.com/expediadotcom/haystack-ui/) on `localhost:8080`. 
+When used in conjunction with haystack-docker, the shopping-frontend will be exposed to port 3000. Navigating around the frontend will dispatch different traces via [haystack agent](https://github.com/expediadotcom/haystack-agent/) on port 34000, which, will be visible on [haystack-ui](https://github.com/expediadotcom/haystack-ui/) on `localhost:8080`, if it is deployed. 
 
 ## Development
 
@@ -21,7 +21,6 @@ $ cd haystack-shopping-example
 We have provided `make` commands to facilitate building. For creating a local docker image for development use -
 ```
 $ make build 
-
 ```
 
 
@@ -37,4 +36,6 @@ $ npm install                # install dependencies
 $ npm run start              # start server in dev mode
 ```
 
-Once start is successful you can visit [http://localhost:3000/](http://localhost:3000/) to view the UI. Bear in mind, traces will not be dispatched to the agent unless it is deployed as part of haystack-docker.
+Once start is successful you can visit [http://localhost:3000/](http://localhost:3000/) to view the UI. Bear in mind, traces will not be dispatched to the agent unless it is deployed as part of haystack-docker. 
+
+One can change dispatcher type on the tracer.js file in both server folders to `file` to write spans locally, see [this example](https://github.com/ExpediaDotCom/haystack-client-node/blob/master/examples/index.js#L44) for a more detailed example. 

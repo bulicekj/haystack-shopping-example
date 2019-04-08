@@ -45,7 +45,9 @@
   margin-left: 30px;
   padding: 0;
   color: #e23474;
-}
+}:visited {
+   color: #e23474;
+ }
 
 code {
   font-weight: 800;
@@ -63,3 +65,24 @@ code {
   right: 30px;
   top: 15px;
 }
+
+.ui-link {
+  margin-top: 15px;
+  background: white;
+  padding: 10px;
+  border-radius: 3px;
+  color: #e23474;
+}
+.ui-link:visited {
+   color: #e23474;
+ }
+.ui-link:hover {
+  background: lightgrey;
+ }
+
+
+
+ .list-item {
+   list-style-type: none;
+   padding-bottom: 15px;
+ }

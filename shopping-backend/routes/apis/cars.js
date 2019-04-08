@@ -1,5 +1,6 @@
 const tracer = require('../../tracer').default;
 const SpanContext = require('haystack-client').SpanContext;
+const opentracing = require('opentracing');
 
 function contactCarsBackend(headers) {
     // Construct parent SpanContext from request headers
@@ -27,9 +28,15 @@ function contactCarsBackend(headers) {
             }
         });
 
+    // Randomly set errors 10% of the time
+    Math.floor(Math.random() * 10) === 0 && serverSpan1.setTag(opentracing.Tags.ERROR, true);
+    Math.floor(Math.random() * 10) === 0 && serverSpan2.setTag(opentracing.Tags.ERROR, true);
+
+
     // Send finished spans to agent
-    serverSpan1.finish();
-    serverSpan2.finish();
+    const dummyDuration = Math.floor(Math.random() * 1000);
+    setTimeout(() => {serverSpan2.finish()}, dummyDuration);
+    setTimeout(() => {serverSpan1.finish()}, dummyDuration + 100);
 
     // Stub data to be passed back to front end, along with traceId for linking to Haystack-UI
     return {

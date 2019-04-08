@@ -10,19 +10,19 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/cars', (req, res) => {
+router.get('/api/cars', (req, res) => {
   res.json(contactCarsBackend(req.headers));
 });
 
-router.get('/hotels', (req, res) => {
+router.get('/api/hotels', (req, res) => {
   res.json(contactHotelsBackend(req.headers));
 });
 
-router.get('/flights', (req, res) => {
+router.get('/api/flights', (req, res) => {
   res.json(contactFlightsBackend(req.headers));
 });
 
-router.get('/package', (req, res) => {
+router.get('/api/package', (req, res) => {
   res.json(contactPackageBackend(req.headers))
 });
 

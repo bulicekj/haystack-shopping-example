@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
+// todo: Fix ES index issue, to link to traceId
 class Flights extends Component {
     state = {flights: [], traceId: null};
 
     componentDidMount() {
-        fetch('/flights')
+        fetch('/api/flights')
             .then(res => res.json())
                 .then(res => this.setState({ flights: res.flights, traceId: res.traceId }))
             .catch(res => console.log(res));
@@ -18,10 +19,10 @@ class Flights extends Component {
                     <h1>Flights</h1>
                     <ul>
                         {this.state.flights && this.state.flights.length > 0 && this.state.flights.map(flight =>
-                            <li key={flight.id}>{flight.name}</li>
+                            <li className="list-item" key={flight.id}>{flight.name}</li>
                         )}
                         {
-                            this.state.traceId && <a href={`http://localhost:8080/search?traceId=${this.state.traceId}`}>View trace in Haystack UI</a>
+                            this.state.traceId && <a className="ui-link" href={`http://localhost:8080/search?serviceName=shopping-frontend`}>View traces in Haystack UI</a>
                         }
                     </ul>
                 </header>

@@ -8,3 +8,4 @@ sample
 *.iml
 *.ipr
 *.iws
+logs/

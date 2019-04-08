@@ -1,5 +1,6 @@
 const tracer = require('../../tracer').default;
 const SpanContext = require('haystack-client').SpanContext;
+const opentracing = require('opentracing');
 const contactCarsBackend = require('./cars');
 const contactHotelsBackend = require('./hotels');
 const contactFlightsBackend = require('./flights');
@@ -30,6 +31,10 @@ function contactPackageBackend(headers) {
             }
         });
 
+    // Randomly set errors 10% of the time
+    Math.floor(Math.random() * 10) === 0 && serverSpan1.setTag(opentracing.Tags.ERROR, true);
+    Math.floor(Math.random() * 10) === 0 && serverSpan2.setTag(opentracing.Tags.ERROR, true);
+
     const childHeaders = {'x-trace-id': serverSpan2._spanContext.traceId, 'x-span-id': serverSpan2._spanContext.spanId, 'x-parent-id': serverSpan2._spanContext.parentSpanId};
 
     const cars = contactCarsBackend(childHeaders).cars;
@@ -43,7 +48,7 @@ function contactPackageBackend(headers) {
 
     // Stub data to be passed back to front end, along with traceId for linking to Haystack-UI
     const packages = cars.map((car, index) => {
-        return {car: car.name, flight: flights[index].name, hotel: hotels[index].name}
+        return {id: index, car: car.name, flight: flights[index].name, hotel: hotels[index].name}
     });
 
     return {

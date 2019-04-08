@@ -96,7 +96,7 @@ module.exports = function(proxy, allowedHost) {
 
       // Initialize haystack tracing for front-end. Construct spans, add parent information to headers to be passed to backend
       app.use(function(req, res, next) {
-          if (req.path.includes('cars') || req.path.includes('hotels') || req.path.includes('flights')) {
+          if (req.path.includes('api')) {
             // Construct span upon hitting front end, which will be parent of child that calls backend
             const span1 = tracer
                 .startSpan('hit-frontend', {tags: {'span.kind': 'client', 'path': req.path}})
@@ -109,6 +109,10 @@ module.exports = function(proxy, allowedHost) {
             req.headers['x-trace-id'] = span2._spanContext.traceId;
             req.headers['x-span-id'] = span2._spanContext.spanId;
             req.headers['x-parent-id'] = span2._spanContext.parentSpanId;
+
+            // Randomly set errors 10% of the time
+            Math.floor(Math.random() * 10) === 0 && span1.setTag(opentracing.Tags.ERROR, true);
+            Math.floor(Math.random() * 10) === 0 && span2.setTag(opentracing.Tags.ERROR, true);
 
             // Send spans to agent
             span2.finish();

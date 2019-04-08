@@ -94,15 +94,25 @@ module.exports = function(proxy, allowedHost) {
       // This lets us open files from the runtime error overlay.
       app.use(errorOverlayMiddleware());
 
-      // Initialize haystack tracing for front-end. Construct a span, add parent information to headers to be passed to backend
+      // Initialize haystack tracing for front-end. Construct spans, add parent information to headers to be passed to backend
       app.use(function(req, res, next) {
-          if (req.path.includes('search') || req.path.includes('cars') || req.path.includes('hotels') || req.path.includes('flights')) {
-              const span = tracer
-                  .startSpan('call-backend', {tags: {'span.kind': 'client'}})
+          if (req.path.includes('cars') || req.path.includes('hotels') || req.path.includes('flights')) {
+            // Construct span upon hitting front end, which will be parent of child that calls backend
+            const span1 = tracer
+                .startSpan('hit-frontend', {tags: {'span.kind': 'client', 'path': req.path}})
+                .setTag(opentracing.Tags.HTTP_METHOD, 'GET');
+            // Child span, which represents backend call
+            const span2 = tracer
+                  .startSpan('call-backend', {childOf: span1, tags: {'span.kind': 'client', 'path': req.path}})
                   .setTag(opentracing.Tags.HTTP_METHOD, 'GET');
-              req.headers['x-trace-id'] = span._spanContext.traceId;
-              req.headers['x-span-id'] = span._spanContext.spanId;
-              span.finish();
+            // Populate headers with span information for backend to extract
+            req.headers['x-trace-id'] = span2._spanContext.traceId;
+            req.headers['x-span-id'] = span2._spanContext.spanId;
+            req.headers['x-parent-id'] = span2._spanContext.parentSpanId;
+
+            // Send spans to agent
+            span2.finish();
+            span1.finish();
           }
           next();
       });

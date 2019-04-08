@@ -5,6 +5,7 @@ import Search from './Search';
 import Cars from './Cars'
 import Hotels from './Hotels';
 import Flights from './Flights';
+import Package from './Package';
 import './App.css';
 
 class App extends Component {
@@ -25,6 +26,9 @@ class App extends Component {
                         <li className="inline-list">
                             <Link to="/hotels">Hotels</Link>
                         </li>
+                        <li className="inline-list">
+                            <Link to="/package">Package</Link>
+                        </li>
                     </ul>
                     <img src="logo.png" className="logo"/>
                     <hr />
@@ -33,6 +37,7 @@ class App extends Component {
                     <Route path="/cars" component={Cars} />
                     <Route path="/hotels" component={Hotels} />
                     <Route path="/flights" component={Flights} />
+                    <Route path="/package" component={Package} />
                 </div>
             </Router>
         );
